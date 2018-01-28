@@ -51,12 +51,6 @@ if(MINGW)
   list(APPEND PYRANHA_CXX_FLAGS_RELEASE "-Wa,-mbig-obj")
 endif()
 
-if(YACMA_COMPILER_IS_GNUCXX)
-    # This is just a hackish way of detecting concepts, need to revisit once
-    # more compilers support them.
-    check_cxx_compiler_flag("-fconcepts" PYRANHA_COMPILER_SUPPORTS_CONCEPTS)
-endif()
-
 # Find mp++. The pybind11 integration is available since 0.6.
 # NOTE: the mp++ dependency is brought in by piranha anyway,
 # but let's play by the rules - we need to include the pybind11
@@ -72,6 +66,15 @@ list(APPEND PYRANHA_MANDATORY_LINK_TARGETS Piranha::piranha)
 # Find pybind11.
 find_package(pybind11 REQUIRED)
 
-YACMA_PYTHON_MODULE(pyranha src/pyranha.cpp)
+YACMA_PYTHON_MODULE(pyranha src/pyranha.cpp src/docstrings.cpp)
 target_link_libraries(pyranha PRIVATE ${PYRANHA_MANDATORY_LINK_TARGETS})
 target_compile_options(pyranha PRIVATE "$<$<CONFIG:DEBUG>:${PYRANHA_CXX_FLAGS_DEBUG}>" "$<$<CONFIG:RELEASE>:${PYRANHA_CXX_FLAGS_RELEASE}>")
+
+if(NOT (YACMA_COMPILER_IS_MSVC AND YACMA_COMPILER_IS_CLANGXX))
+  # Let's setup the target C++ standard, but only if the user did not provide it manually.
+  if(NOT CMAKE_CXX_STANDARD)
+    set_property(TARGET pyranha PROPERTY CXX_STANDARD 11)
+  endif()
+  set_property(TARGET pyranha PROPERTY CXX_STANDARD_REQUIRED YES)
+  set_property(TARGET pyranha PROPERTY CXX_EXTENSIONS NO)
+endif()
