@@ -1,6 +1,6 @@
 // Copyright 2018 Francesco Biscani (bluescarni@gmail.com)
 //
-// This file is part of the mp++ library.
+// This file is part of the pyranha library.
 //
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
@@ -11,7 +11,12 @@
 
 #include <piranha/integer.hpp>
 #include <piranha/math/binomial.hpp>
+#include <piranha/math/cos.hpp>
+#include <piranha/math/sin.hpp>
 #include <piranha/rational.hpp>
+#if defined(MPPP_WITH_MPFR)
+#include <piranha/real.hpp>
+#endif
 
 #include <pybind11/pybind11.h>
 
@@ -32,11 +37,14 @@ PYBIND11_MODULE(pyranha, m)
 
     m.doc() = pyranha_docstring().c_str();
 
-    py::module math_m = m.def_submodule("math");
+    m.def("binomial", &piranha::binomial<const integer &, const integer &>, pyranha_math_binomial_docstring().c_str(),
+          "x"_a, "y"_a);
+    m.def("binomial", &piranha::binomial<const rational &, const integer &>, "x"_a, "y"_a);
 
-    math_m.doc() = pyranha_math_docstring().c_str();
-
-    math_m.def("binomial", math::binomial<const integer &, const integer &>, pyranha_math_binomial_docstring().c_str(),
-               "x"_a, "y"_a);
-    math_m.def("binomial", math::binomial<const rational &, const integer &>, "x"_a, "y"_a);
+    m.def("sin", &piranha::sin<const double &>, pyranha_math_sin_docstring().c_str(), "x"_a);
+    m.def("sin", &piranha::sin<const integer &>, "x"_a);
+    m.def("sin", &piranha::sin<const rational &>, "x"_a);
+#if defined(MPPP_WITH_MPFR)
+    m.def("sin", &piranha::sin<const real &>, "x"_a);
+#endif
 }

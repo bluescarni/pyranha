@@ -8,11 +8,5 @@ Welcome to Pyranha's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
-.. automodule:: pyranha
-   :members:
-
-.. automodule:: pyranha.math
-   :members:
+   reference.rst

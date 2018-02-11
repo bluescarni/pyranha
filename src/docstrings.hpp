@@ -1,6 +1,6 @@
 // Copyright 2018 Francesco Biscani (bluescarni@gmail.com)
 //
-// This file is part of the mp++ library.
+// This file is part of the pyranha library.
 //
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
@@ -16,9 +16,8 @@ namespace pyranha
 
 std::string pyranha_docstring();
 
-std::string pyranha_math_docstring();
-
 std::string pyranha_math_binomial_docstring();
+std::string pyranha_math_sin_docstring();
 }
 
 #endif

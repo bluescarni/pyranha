@@ -1,8 +1,6 @@
-cmake_policy(SET CMP0048 NEW)
+cmake_minimum_required(VERSION 3.3.0)
 
 project(pyranha VERSION 0.11 LANGUAGES CXX C)
-
-cmake_minimum_required(VERSION 3.3.0)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/yacma")
 
@@ -61,7 +59,7 @@ list(APPEND PYRANHA_MANDATORY_LINK_TARGETS mp++::mp++)
 # Find piranha. Let's keep the piranha and pyranha versions in sync
 # for the time being.
 find_package(piranha ${pyranha_VERSION} EXACT REQUIRED)
-list(APPEND PYRANHA_MANDATORY_LINK_TARGETS Piranha::piranha)
+list(APPEND PYRANHA_MANDATORY_LINK_TARGETS piranha::piranha)
 
 # Find pybind11.
 find_package(pybind11 REQUIRED)
@@ -78,3 +76,6 @@ if(NOT (YACMA_COMPILER_IS_MSVC AND YACMA_COMPILER_IS_CLANGXX))
   set_property(TARGET pyranha PROPERTY CXX_STANDARD_REQUIRED YES)
   set_property(TARGET pyranha PROPERTY CXX_EXTENSIONS NO)
 endif()
+
+# Configure the doc file.
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)
