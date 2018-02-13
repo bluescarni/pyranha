@@ -62,7 +62,7 @@ find_package(piranha ${pyranha_VERSION} EXACT REQUIRED)
 # Find pybind11.
 find_package(pybind11 REQUIRED)
 
-YACMA_PYTHON_MODULE(pyranha src/pyranha.cpp src/docstrings.cpp)
+YACMA_PYTHON_MODULE(pyranha src/pyranha.cpp src/docstrings.cpp src/expose_math.cpp)
 target_link_libraries(pyranha PRIVATE mp++::mp++ piranha::piranha)
 target_compile_options(pyranha PRIVATE "$<$<CONFIG:DEBUG>:${PYRANHA_CXX_FLAGS_DEBUG}>" "$<$<CONFIG:RELEASE>:${PYRANHA_CXX_FLAGS_RELEASE}>")
 
