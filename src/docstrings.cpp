@@ -20,7 +20,19 @@ The root pyranha module.
     )";
 }
 
-std::string pyranha_math_binomial_docstring()
+std::string pyranha_run_test_suite_docstring()
+{
+    return R"(run_test_suite()
+
+    Run pyranha's full test suite.
+
+    Informative text output will be printed to screen during the execution of the
+    test suite. In any test fails, a :py:class:`RuntimeError` exception will be raised.
+
+    )";
+}
+
+std::string pyranha_binomial_docstring()
 {
     return R"(binomial(x, y)
 
@@ -62,7 +74,7 @@ std::string pyranha_math_binomial_docstring()
     )";
 }
 
-std::string pyranha_math_sin_docstring()
+std::string pyranha_sin_docstring()
 {
     return R"(sin(x)
 
@@ -107,7 +119,7 @@ std::string pyranha_math_sin_docstring()
     )";
 }
 
-std::string pyranha_math_cos_docstring()
+std::string pyranha_cos_docstring()
 {
     return R"(cos(x)
 

@@ -77,3 +77,6 @@ endif()
 
 # Configure the doc file.
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py.in" "${CMAKE_CURRENT_SOURCE_DIR}/doc/conf.py" @ONLY)
+
+# Copy over the test file to the build dir.
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/_pyranha_test.py" "${CMAKE_CURRENT_BINARY_DIR}/_pyranha_test.py" @ONLY)

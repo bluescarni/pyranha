@@ -8,4 +8,5 @@ The following subsections contain the detailed documentation of pyranha's public
 .. toctree::
    :maxdepth: 1
 
+   testing.rst
    math.rst

@@ -16,9 +16,11 @@ namespace pyranha
 
 std::string pyranha_docstring();
 
-std::string pyranha_math_binomial_docstring();
-std::string pyranha_math_sin_docstring();
-std::string pyranha_math_cos_docstring();
+std::string pyranha_run_test_suite_docstring();
+
+std::string pyranha_binomial_docstring();
+std::string pyranha_sin_docstring();
+std::string pyranha_cos_docstring();
 }
 
 #endif
