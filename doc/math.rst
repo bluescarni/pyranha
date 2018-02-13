@@ -16,3 +16,5 @@ Trigonometry
 
 Comparisons
 -----------
+
+.. autofunction:: pyranha.is_zero

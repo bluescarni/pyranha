@@ -24,6 +24,7 @@ class math_test_case(_ut.TestCase):
         # self.assertAlmostEqual(math.sin(-2.456), psin(pt(-2.456)).list[0][0])
         self.binomialTest()
         self.sincosTest()
+        self.is_zeroTest()
 
     def binomialTest(self):
         from pyranha import binomial
@@ -96,6 +97,32 @@ class math_test_case(_ut.TestCase):
             self.assertEqual(type(sin(mpf(1))), mpf)
             self.assertEqual(cos(mpf(1)), mp_cos(1))
             self.assertEqual(sin(mpf(1)), mp_sin(1))
+
+    def is_zeroTest(self):
+        from fractions import Fraction as F
+        from pyranha import is_zero, _with_mpfr
+        # Check the return types.
+        self.assertEqual(type(is_zero(0)), bool)
+        self.assertEqual(type(is_zero(0.)), bool)
+        self.assertEqual(type(is_zero(F(0))), bool)
+        with self.assertRaises(TypeError) as cm:
+            is_zero("")
+        self.assertTrue('incompatible function arguments' in str(cm.exception))
+        self.assertTrue(is_zero(0.))
+        self.assertFalse(is_zero(43))
+        self.assertFalse(is_zero(F(43, 5)))
+        with self.assertRaises(TypeError) as cm:
+            is_zero(a=5)
+        self.assertTrue('incompatible function arguments' in str(cm.exception))
+        if not _with_mpfr:
+            return
+        try:
+            from mpmath import mpf, workdps
+        except ImportError:
+            return
+        with workdps(100):
+            self.assertEqual(type(is_zero(mpf(1))), bool)
+            self.assertFalse(is_zero(mpf(1)))
 
 
 class doctests_test_case(_ut.TestCase):

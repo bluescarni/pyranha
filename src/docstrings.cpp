@@ -98,7 +98,7 @@ std::string pyranha_sin_docstring()
             :math:`\sin\left(x\right)`
 
         Raises:
-            TypeError: if the function arguments are incompatible with the exposed C++ overloads
+            TypeError: if the function argument is incompatible with the exposed C++ overloads
             unspecified: any exception thrown by :cpp:func:`piranha::sin() <piranha::sin()>`
 
         Examples:
@@ -143,7 +143,7 @@ std::string pyranha_cos_docstring()
             :math:`\cos\left(x\right)`
 
         Raises:
-            TypeError: if the function arguments are incompatible with the exposed C++ overloads
+            TypeError: if the function argument is incompatible with the exposed C++ overloads
             unspecified: any exception thrown by :cpp:func:`piranha::cos() <piranha::cos()>`
 
         Examples:
@@ -160,6 +160,47 @@ std::string pyranha_cos_docstring()
             Traceback (most recent call last):
                ...
             TypeError: cos(): incompatible function arguments
+
+    )";
+}
+
+std::string pyranha_is_zero_docstring()
+{
+    return R"(is_zero(x)
+
+        Detect zero.
+
+        This function returns ``True`` if *x* is zero, ``False`` otherwise.
+        The implementation is a thin wrapper around piranha's
+        :cpp:func:`is_zero() <piranha::is_zero()>` function.
+
+        This function currently supports the following argument types:
+
+        * :py:class:`int`,
+        * :py:class:`fractions.Fraction`,
+        * :py:class:`float`,
+        * ``mpf``.
+
+        Args:
+            x: the object that will be tested
+
+        Returns:
+            ``True`` if *x* is zero, ``False`` otherwise
+
+        Raises:
+            TypeError: if the function argument is incompatible with the exposed C++ overloads
+            unspecified: any exception thrown by :cpp:func:`piranha::is_zero() <piranha::is_zero()>`
+
+        Examples:
+            >>> from fractions import Fraction as F
+            >>> is_zero(0.1)
+            False
+            >>> is_zero(F(0, 1))
+            True
+            >>> is_zero("foo") # doctest: +IGNORE_EXCEPTION_DETAIL
+            Traceback (most recent call last):
+               ...
+            TypeError: is_zero(): incompatible function arguments
 
     )";
 }
