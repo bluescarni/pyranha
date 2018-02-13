@@ -47,4 +47,11 @@ PYBIND11_MODULE(pyranha, m)
 #if defined(MPPP_WITH_MPFR)
     m.def("sin", &piranha::sin<const real &>, "x"_a);
 #endif
+
+    m.def("cos", &piranha::cos<const double &>, pyranha_math_cos_docstring().c_str(), "x"_a);
+    m.def("cos", &piranha::cos<const integer &>, "x"_a);
+    m.def("cos", &piranha::cos<const rational &>, "x"_a);
+#if defined(MPPP_WITH_MPFR)
+    m.def("cos", &piranha::cos<const real &>, "x"_a);
+#endif
 }

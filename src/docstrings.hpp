@@ -18,6 +18,7 @@ std::string pyranha_docstring();
 
 std::string pyranha_math_binomial_docstring();
 std::string pyranha_math_sin_docstring();
+std::string pyranha_math_cos_docstring();
 }
 
 #endif

@@ -54,18 +54,16 @@ endif()
 # but let's play by the rules - we need to include the pybind11
 # mp++ bits independently from piranha.
 find_package(mp++ 0.6 REQUIRED)
-list(APPEND PYRANHA_MANDATORY_LINK_TARGETS mp++::mp++)
 
 # Find piranha. Let's keep the piranha and pyranha versions in sync
 # for the time being.
 find_package(piranha ${pyranha_VERSION} EXACT REQUIRED)
-list(APPEND PYRANHA_MANDATORY_LINK_TARGETS piranha::piranha)
 
 # Find pybind11.
 find_package(pybind11 REQUIRED)
 
 YACMA_PYTHON_MODULE(pyranha src/pyranha.cpp src/docstrings.cpp)
-target_link_libraries(pyranha PRIVATE ${PYRANHA_MANDATORY_LINK_TARGETS})
+target_link_libraries(pyranha PRIVATE mp++::mp++ piranha::piranha)
 target_compile_options(pyranha PRIVATE "$<$<CONFIG:DEBUG>:${PYRANHA_CXX_FLAGS_DEBUG}>" "$<$<CONFIG:RELEASE>:${PYRANHA_CXX_FLAGS_RELEASE}>")
 
 if(NOT (YACMA_COMPILER_IS_MSVC AND YACMA_COMPILER_IS_CLANGXX))

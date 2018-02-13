@@ -12,6 +12,7 @@ Trigonometry
 ------------
 
 .. autofunction:: pyranha.sin
+.. autofunction:: pyranha.cos
 
 Comparisons
 -----------
