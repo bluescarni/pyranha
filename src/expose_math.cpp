@@ -19,7 +19,9 @@
 
 #include <pybind11/pybind11.h>
 
+// NOTE: let's make sure this is always included first.
 #include "custom_type_casters.hpp"
+
 #include "docstrings.hpp"
 #include "expose_math.hpp"
 
