@@ -18,3 +18,4 @@ Comparisons
 -----------
 
 .. autofunction:: pyranha.is_zero
+.. autofunction:: pyranha.is_one

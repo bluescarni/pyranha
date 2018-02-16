@@ -22,6 +22,7 @@ std::string pyranha_binomial_docstring();
 std::string pyranha_sin_docstring();
 std::string pyranha_cos_docstring();
 std::string pyranha_is_zero_docstring();
+std::string pyranha_is_one_docstring();
 }
 
 #endif

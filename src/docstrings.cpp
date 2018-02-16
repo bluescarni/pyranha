@@ -170,7 +170,7 @@ std::string pyranha_is_zero_docstring()
 
         Detect zero.
 
-        This function returns ``True`` if *x* is zero, ``False`` otherwise.
+        This function returns ``True`` if *x* is equal to zero, ``False`` otherwise.
         The implementation is a thin wrapper around piranha's
         :cpp:func:`is_zero() <piranha::is_zero()>` function.
 
@@ -185,7 +185,7 @@ std::string pyranha_is_zero_docstring()
             x: the object that will be tested
 
         Returns:
-            ``True`` if *x* is zero, ``False`` otherwise
+            ``True`` if *x* is equal to zero, ``False`` otherwise
 
         Raises:
             TypeError: if the function argument is incompatible with the exposed C++ overloads
@@ -201,6 +201,47 @@ std::string pyranha_is_zero_docstring()
             Traceback (most recent call last):
                ...
             TypeError: is_zero(): incompatible function arguments
+
+    )";
+}
+
+std::string pyranha_is_one_docstring()
+{
+    return R"(is_one(x)
+
+        Detect one.
+
+        This function returns ``True`` if *x* is equal to one, ``False`` otherwise.
+        The implementation is a thin wrapper around piranha's
+        :cpp:func:`is_one() <piranha::is_one()>` function.
+
+        This function currently supports the following argument types:
+
+        * :py:class:`int`,
+        * :py:class:`fractions.Fraction`,
+        * :py:class:`float`,
+        * ``mpf``.
+
+        Args:
+            x: the object that will be tested
+
+        Returns:
+            ``True`` if *x* is equal to one, ``False`` otherwise
+
+        Raises:
+            TypeError: if the function argument is incompatible with the exposed C++ overloads
+            unspecified: any exception thrown by :cpp:func:`piranha::is_one() <piranha::is_one()>`
+
+        Examples:
+            >>> from fractions import Fraction as F
+            >>> is_one(0.1)
+            False
+            >>> is_one(F(1, 1))
+            True
+            >>> is_one("foo") # doctest: +IGNORE_EXCEPTION_DETAIL
+            Traceback (most recent call last):
+               ...
+            TypeError: is_one(): incompatible function arguments
 
     )";
 }

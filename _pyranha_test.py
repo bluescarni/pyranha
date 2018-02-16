@@ -25,6 +25,7 @@ class math_test_case(_ut.TestCase):
         self.binomialTest()
         self.sincosTest()
         self.is_zeroTest()
+        self.is_oneTest()
 
     def binomialTest(self):
         from pyranha import binomial
@@ -123,6 +124,32 @@ class math_test_case(_ut.TestCase):
         with workdps(100):
             self.assertEqual(type(is_zero(mpf(1))), bool)
             self.assertFalse(is_zero(mpf(1)))
+
+    def is_oneTest(self):
+        from fractions import Fraction as F
+        from pyranha import is_one, _with_mpfr
+        # Check the return types.
+        self.assertEqual(type(is_one(0)), bool)
+        self.assertEqual(type(is_one(0.)), bool)
+        self.assertEqual(type(is_one(F(0))), bool)
+        with self.assertRaises(TypeError) as cm:
+            is_one("")
+        self.assertTrue('incompatible function arguments' in str(cm.exception))
+        self.assertTrue(is_one(1.))
+        self.assertFalse(is_one(43))
+        self.assertFalse(is_one(F(43, 5)))
+        with self.assertRaises(TypeError) as cm:
+            is_one(a=5)
+        self.assertTrue('incompatible function arguments' in str(cm.exception))
+        if not _with_mpfr:
+            return
+        try:
+            from mpmath import mpf, workdps
+        except ImportError:
+            return
+        with workdps(100):
+            self.assertEqual(type(is_one(mpf(1))), bool)
+            self.assertTrue(is_one(mpf(1)))
 
 
 class doctests_test_case(_ut.TestCase):

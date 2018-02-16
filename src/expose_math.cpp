@@ -11,6 +11,8 @@
 #include <piranha/integer.hpp>
 #include <piranha/math/binomial.hpp>
 #include <piranha/math/cos.hpp>
+#include <piranha/math/is_one.hpp>
+#include <piranha/math/is_zero.hpp>
 #include <piranha/math/sin.hpp>
 #include <piranha/rational.hpp>
 #if defined(MPPP_WITH_MPFR)
@@ -62,6 +64,14 @@ void expose_math(pybind11::module &m)
     m.def("is_zero", &piranha::is_zero<const double &>, "x"_a);
 #if defined(MPPP_WITH_MPFR)
     m.def("is_zero", &piranha::is_zero<const real &>, "x"_a);
+#endif
+
+    // One detection.
+    m.def("is_one", &piranha::is_one<const integer &>, pyranha_is_one_docstring().c_str(), "x"_a);
+    m.def("is_one", &piranha::is_one<const rational &>, "x"_a);
+    m.def("is_one", &piranha::is_one<const double &>, "x"_a);
+#if defined(MPPP_WITH_MPFR)
+    m.def("is_one", &piranha::is_one<const real &>, "x"_a);
 #endif
 }
 }
