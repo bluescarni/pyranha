@@ -74,6 +74,42 @@ std::string pyranha_binomial_docstring()
     )";
 }
 
+std::string pyranha_gcd_docstring()
+{
+    return R"(gcd(x, y)
+
+        Greatest common divisor (GCD).
+
+        This function computes the greatest common divisor of *x* and *y*. The implementation
+        is a thin wrapper around piranha's :cpp:func:`gcd() <piranha::gcd()>`
+        function.
+
+        This function currently supports :py:class:`int` arguments.
+
+        Args:
+            x: the first argument
+            y: the second argument
+
+        Returns:
+            the GCD of *x* and *y*
+
+        Raises:
+            TypeError: if the function arguments are incompatible with the exposed C++ overloads
+            unspecified: any exception thrown by :cpp:func:`piranha::gcd() <piranha::gcd()>`
+
+        Examples:
+            >>> gcd(24, 16)
+            8
+            >>> gcd(-27, 18)
+            9
+            >>> gcd(3.4, 5.6) # doctest: +IGNORE_EXCEPTION_DETAIL
+            Traceback (most recent call last):
+               ...
+            TypeError: gcd(): incompatible function arguments
+
+    )";
+}
+
 std::string pyranha_sin_docstring()
 {
     return R"(sin(x)

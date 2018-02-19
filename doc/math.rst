@@ -7,6 +7,7 @@ Number theoretic functions
 --------------------------
 
 .. autofunction:: pyranha.binomial
+.. autofunction:: pyranha.gcd
 
 Trigonometry
 ------------

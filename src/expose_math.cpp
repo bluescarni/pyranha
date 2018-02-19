@@ -42,6 +42,9 @@ void expose_math(pybind11::module &m)
           "y"_a);
     m.def("binomial", &piranha::binomial<const rational &, const integer &>, "x"_a, "y"_a);
 
+    // GCD.
+    m.def("gcd", &piranha::gcd<const integer &, const integer &>, pyranha_gcd_docstring().c_str(), "x"_a, "y"_a);
+
     // Sine.
     m.def("sin", &piranha::sin<const integer &>, pyranha_sin_docstring().c_str(), "x"_a);
     m.def("sin", &piranha::sin<const rational &>, "x"_a);

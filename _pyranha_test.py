@@ -23,6 +23,7 @@ class math_test_case(_ut.TestCase):
         # self.assertAlmostEqual(math.sin(3), psin(pt(3)).list[0][0])
         # self.assertAlmostEqual(math.sin(-2.456), psin(pt(-2.456)).list[0][0])
         self.binomialTest()
+        self.gcdTest()
         self.sincosTest()
         self.is_zeroTest()
         self.is_oneTest()
@@ -44,6 +45,19 @@ class math_test_case(_ut.TestCase):
         self.assertTrue('incompatible function arguments' in str(cm.exception))
         with self.assertRaises(TypeError) as cm:
             binomial(x=F(7, 3), a=4)
+        self.assertTrue('incompatible function arguments' in str(cm.exception))
+
+    def gcdTest(self):
+        from pyranha import gcd
+        self.assertEqual(type(gcd(5, 4)), int)
+        self.assertEqual(gcd(-5, 4), 1)
+        self.assertEqual(gcd(x=-6, y=4), 2)
+        self.assertEqual(gcd(y=4, x=-6), 2)
+        with self.assertRaises(TypeError) as cm:
+            gcd(1.2, 3.4)
+        self.assertTrue('incompatible function arguments' in str(cm.exception))
+        with self.assertRaises(TypeError) as cm:
+            gcd(x=6, a=4)
         self.assertTrue('incompatible function arguments' in str(cm.exception))
 
     def sincosTest(self):
