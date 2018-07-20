@@ -82,16 +82,13 @@ if(NOT _YACMACompilerLinkerSettingsRun)
     set(_YACMA_CXX_FLAGS "")
     set(_YACMA_CXX_FLAGS_DEBUG "")
 
-    # NOTE: all these flags are with a Unix-like syntax. We will need to change them
-    # for MSVC and clang on windows possibly.
-
     # Configuration bits specific for GCC.
     if(YACMA_COMPILER_IS_GNUCXX)
         _YACMA_CHECK_ENABLE_CXX_FLAG(-fdiagnostics-color=auto)
     endif()
 
     # Configuration bits specific for clang.
-    if(YACMA_COMPILER_IS_CLANGXX AND NOT YACMA_COMPILER_IS_MSVC)
+    if(YACMA_COMPILER_IS_CLANGXX)
         # For now it seems like -Wshadow from clang behaves better than GCC's, just enable it here
         # for the time being.
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wshadow)
@@ -100,7 +97,7 @@ if(NOT _YACMACompilerLinkerSettingsRun)
     endif()
 
     # Common configuration for GCC, clang and Intel.
-    if((YACMA_COMPILER_IS_CLANGXX AND NOT YACMA_COMPILER_IS_MSVC) OR YACMA_COMPILER_IS_INTELXX OR YACMA_COMPILER_IS_GNUCXX)
+    if(YACMA_COMPILER_IS_CLANGXX OR YACMA_COMPILER_IS_INTELXX OR YACMA_COMPILER_IS_GNUCXX)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wall)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wextra)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wnon-virtual-dtor)
@@ -121,10 +118,16 @@ if(NOT _YACMACompilerLinkerSettingsRun)
         # This is useful when the compiler decides the template backtrace is too verbose.
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-ftemplate-backtrace-limit=0)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-fstack-protector-all)
-        # These became available in GCC from version 5.
+        # A few suggestion flags.
+        _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-attribute=pure)
+        _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-attribute=const)
+        _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-attribute=noreturn)
+        _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-attribute=format)
+        # From GCC 5.
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wodr)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-final-types)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-final-methods)
+        _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wsuggest-override)
         # From GCC 6.
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wshift-negative-value)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wshift-overflow=2)
@@ -134,6 +137,11 @@ if(NOT _YACMACompilerLinkerSettingsRun)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wduplicated-branches)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wrestrict)
         _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Waligned-new)
+        # From GCC 8.
+        _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wcast-align=strict)
+        # This is supposed to produce a nice graphical visualization
+        # of mismatching template errors.
+        _YACMA_CHECK_ENABLE_CXX_FLAG(-fdiagnostics-show-template-tree)
         if(YACMA_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "5.999")
             # NOTE: GCC >= 6 seems to be wrongly warning about visibility attributes
             # in some situations:
@@ -141,6 +149,12 @@ if(NOT _YACMACompilerLinkerSettingsRun)
             # Let's just disable the warning for now.
             message(STATUS "Activating the '-Wno-attributes' workaround for GCC >= 6.")
             _YACMA_CHECK_ENABLE_CXX_FLAG(-Wno-attributes)
+        endif()
+        if(YACMA_COMPILER_IS_GNUCXX)
+            # The -Wmaybe-uninitialized flag is enabled by -Wall, but it is known
+            # to emit a lot of possibly spurious warnings. Let's just disable it.
+            message(STATUS "Activating the '-Wno-maybe-uninitialized' workaround for GCC.")
+            _YACMA_CHECK_ENABLE_DEBUG_CXX_FLAG(-Wno-maybe-uninitialized)
         endif()
     endif()
 
